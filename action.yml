@@ -1,15 +1,15 @@
-name: 'commitlint'
-description: 'check that commit messages adhere to conventional commits and includes a jira tag'
+name: commitlint
+description: check that commit messages adhere to conventional commits and includes a jira tag
 inputs:
   accessToken:
-    description: 'Github Access Token'
+    description: Github Access Token
     required: true
 outputs:
   results:
-    description: 'conventional commits results'
+    description: conventional commits results
     value: ${{ steps.conventional-commitlint.outputs.results }}
 runs:
-  using: "composite"
+  using: composite
   steps:
     - name: Checkout action other repository
       uses: actions/checkout@v2
@@ -20,13 +20,13 @@ runs:
       uses: gsactions/commit-message-checker@v1
       id: jira-id
       with:
-        pattern: '(?:ed-[\d]+)|(?:(?:skip|no) issue)|dependabot'
+        pattern: (?:ed-[\d]+)|(?:(?:skip|no) issue)|dependabot
         flags: gmi
-        checkAllCommitMessages: 'true' # optional: this checks all commits associated with a pull request
-        excludeDescription: 'true' # optional: this excludes the description body of a pull request
-        excludeTitle: 'true' # optional: this excludes the title of a pull request
+        checkAllCommitMessages: true # optional: this checks all commits associated with a pull request
+        excludeDescription: true # optional: this excludes the description body of a pull request
+        excludeTitle: true # optional: this excludes the title of a pull request
         accessToken: ${{ inputs.accessToken }}
-        error: 'You need at least Jira ID or Skip tag i.e [ED-123]  | [skip|no issue].'
+        error: You need at least Jira ID or Skip tag i.e [ED-122]  | [skip|no issue].
 
     - name: Clone commitlint repository # so we have the commitlint.config.cjs
       shell: bash
